@@ -1,0 +1,45 @@
+{
+  "name": "@entodex/mobile",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "dev": "expo start",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@entodex/shared": "workspace:*",
+    "ansi-styles": "^5.2.0",
+    "@expo/metro": "^55.1.1",
+    "@expo/log-box": "^55.0.12",
+    "css-in-js-utils": "^3.1.0",
+    "hyphenate-style-name": "^1.1.0",
+    "@babel/runtime": "^7.29.0",
+    "expo": "~55.0.25",
+    "expo-modules-core": "~2.2.0",
+    "expo-status-bar": "~55.0.6",
+    "fbjs": "^3.0.5",
+    "invariant": "^2.2.4",
+    "inline-style-prefixer": "^6.0.4",
+    "metro-runtime": "^0.83.7",
+    "postcss-value-parser": "^4.2.0",
+    "pretty-format": "^29.7.0",
+    "react-is": "^18.3.1",
+    "scheduler": "^0.23.2",
+    "@react-native/normalize-colors": "^0.83.6",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-native": "0.83.6",
+    "react-native-web": "~0.21.0",
+    "styleq": "^0.1.3"
+  },
+  "devDependencies": {
+    "react-refresh": "^0.14.2",
+    "@types/react": "~19.2.2",
+    "typescript": "~5.9.2"
+  }
+}

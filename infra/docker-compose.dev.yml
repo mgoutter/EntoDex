@@ -1,0 +1,82 @@
+version: "3.9"
+
+services:
+  entodex-postgres-dev:
+    image: postgres:16-alpine
+    container_name: entodex-postgres-dev
+    env_file:
+      - ../services/postgres/.env.example
+    ports:
+      - "5432:5432"
+    volumes:
+      - entodex-postgres-data-dev:/var/lib/postgresql/data
+      - ../services/postgres/init:/docker-entrypoint-initdb.d
+    networks:
+      - entodex-network-dev
+
+  entodex-redis-dev:
+    image: redis:7-alpine
+    container_name: entodex-redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - entodex-redis-data-dev:/data
+    networks:
+      - entodex-network-dev
+
+  entodex-web-dev:
+    container_name: entodex-web-dev
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile.dev
+    working_dir: /app/apps/web
+    command: sh -c "pnpm install && pnpm dev"
+    ports:
+      - "3001:3000"
+    volumes:
+      - ..:/app
+      - entodex-root-node-modules-dev:/app/node_modules
+      - entodex-web-node-modules-dev:/app/apps/web/node_modules
+    env_file:
+      - ../apps/web/.env.example
+    depends_on:
+      - entodex-postgres-dev
+      - entodex-redis-dev
+    networks:
+      - entodex-network-dev
+
+  entodex-ia-dev:
+    container_name: entodex-ia-dev
+    build:
+      context: ..
+      dockerfile: apps/ia/api/Dockerfile.dev
+    working_dir: /app/apps/ia/api
+    command: sh -c "pnpm install && pnpm dev"
+    ports:
+      - "3002:3000"
+    volumes:
+      - ..:/app
+      - entodex-root-node-modules-dev:/app/node_modules
+      - entodex-ia-node-modules-dev:/app/apps/ia/api/node_modules
+    env_file:
+      - ../apps/ia/api/.env.example
+    depends_on:
+      - entodex-redis-dev
+    networks:
+      - entodex-network-dev
+
+networks:
+  entodex-network-dev:
+    name: entodex-network-dev
+
+volumes:
+  entodex-postgres-data-dev:
+    name: entodex-postgres-data-dev
+  entodex-redis-data-dev:
+    name: entodex-redis-data-dev
+  entodex-root-node-modules-dev:
+    name: entodex-root-node-modules-dev
+  entodex-web-node-modules-dev:
+    name: entodex-web-node-modules-dev
+  entodex-ia-node-modules-dev:
+    name: entodex-ia-node-modules-dev
