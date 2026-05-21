@@ -8,3 +8,5 @@ build
 .next
 coverage
 .DS_Store
+.pnpm_store
+.turbo

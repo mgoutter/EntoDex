@@ -8,7 +8,7 @@ export function applyCorsHeaders(req: NextApiRequest, res: NextApiResponse): voi
 
 export function GetCorsHeaders(req: NextApiRequest): Map<string, string> {
     const origin = req.headers["origin"]
-    const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',').map(o => o.trim()) || []
+    const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',').map((o: string) => o.trim()) || []
     
     const headers = new Map<string, string>([
         ['Content-Type', 'application/json'],
